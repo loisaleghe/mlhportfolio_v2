@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Register </title>
+        <link lang="sass" rel="stylesheet" href="./static/styles/main.css" />
+        <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body></br></br></br></br></br>
+          <div class="container">
+             <div class="header">
+                <h1 class="fire word" align="center">REGISTER PAGE</h1>
+             </div></br></br></br>
+             <h2 class="word">
+                <form action="{{ url_for('register') }}" method="post">
+                    <div class="mb-3">
+                      <label for="usernametxt" class="form-label">Username</label>
+                      <input type="usernametxt" class="form-control" id="username" aria-describedby="usernamelogin" placeholder="Enter Your Username" >
+                    </div><br/>
+                    <div class="mb-3">
+                      <label for="passwordtxt" class="form-label">Password</label>
+                      <input type="passwordtxt" class="form-control" id="passwordlogin" placeholder="Enter Your Password">
+                    </div>
+                    <div class="fst-italic fs-6 text-white" >We'll never share your password with anyone else.</div><br/>
+                    <div class="mb-3">
+                        <label for="emailtxt" class="form-label">Email Address</label>
+                        <input type="emailtxt" class="form-control" id="emaillogin" placeholder="Enter Your Email">
+                      </div>
+                    <button type="submit" class="btn btn-primary text-center" align="center">Submit</button><br/>
+                  </form>
+                  </h2>
+            <p class="bottom">Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
+        </div>
+    </body>
+</html>
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

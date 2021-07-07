@@ -2,15 +2,27 @@ import os
 from flask import Flask, render_template, send_from_directory, json, request
 from dotenv import load_dotenv
 from . import db
-from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import get_db
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 load_dotenv()
 app = Flask(__name__)
-app.config['DATABASE'] = os.path.join(os.getcwd(), 'flask.sqlite')
-db.init_app(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://{user}:{passwd}@{host}:{port}/{table}'.format(
+    user=os.getenv('POSTGRES_USER'),
+    passwd=os.getenv('POSTGRES_PASSWORD'),
+    host=os.getenv('POSTGRES_HOST'),
+    port=5432,
+    table=os.getenv('POSTGRES_DB'))
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+# app.config['DATABASE'] = os.path.join(os.getcwd(), 'flask.sqlite')
+# db.init_app(app)
 
 
 @app.route('/')
@@ -55,16 +67,19 @@ def showblog():
 def project_page():
     return render_template('project.html')
 
+
 @app.route('/health', methods=['GET'])
 def health_status():
     return '200 status ok'
+
 
 @app.route('/team')
 def team_page():
     return render_template('team.html', title="Team Dragon's Den")
 
+
 @app.route('/register', methods=['GET', 'POST'])
-def register_pg():
+def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -90,11 +105,13 @@ def register_pg():
         else:
             return error, 418
 
-    ## TODO: Return a restister page
-    return "Register Page not yet implemented", 501
+    # TODO: Return a restister page
+    # return "Register Page not yet implemented", 501
+    return render_template('register.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
-def login_pg():
+def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -104,15 +121,20 @@ def login_pg():
             'SELECT * FROM user WHERE username = ?', (username,)
         ).fetchone()
 
+        check_password_hash = db.execute(
+            'SELECT * FROM user WHERE password = ?', (password,)
+        ).fetchone()
+
         if user is None:
             error = 'Incorrect username.'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
 
         if error is None:
-            return "Login Successful", 200 
+            return "Login Successful", 200
         else:
             return error, 418
-    
-    ## TODO: Return a login page
-    return "Login Page not yet implemented", 501
+
+    # TODO: Return a login page
+    # return "Login Page not yet implemented", 501
+    return render_template('login.html')

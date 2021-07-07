@@ -19,6 +19,10 @@ body {
   margin: 0px;
 }
 
+.word {
+  color: white;
+}
+
 .nav-bar {
   width: 100%;
   display: inline-block;
