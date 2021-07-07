@@ -1,9 +1,9 @@
 import os
 from flask import Flask, render_template, send_from_directory, json, request
 from dotenv import load_dotenv
-from . import db
+# from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.db import get_db
+# from app.db import get_db
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -23,6 +23,19 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 # app.config['DATABASE'] = os.path.join(os.getcwd(), 'flask.sqlite')
 # db.init_app(app)
+
+
+class UserModel(db.Model):
+    __tablename__ = 'users'
+    username = db.Column(db.String(), primary_key=True)
+    password = db.Column(db.String())
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def __repr__(self):
+        return f"<User {self.username}>"
 
 
 @app.route('/')
@@ -83,7 +96,6 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        db = get_db()
         error = None
 
         if not username:
@@ -115,7 +127,6 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        db = get_db()
         error = None
         user = db.execute(
             'SELECT * FROM user WHERE username = ?', (username,)
