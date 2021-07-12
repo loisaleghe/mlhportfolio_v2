@@ -9,10 +9,10 @@ on:
 jobs:
   deploy:
     name: "Deploy to AWS EC2 Virtual Machine"
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Configure SSH
-        run:  |
+        run: |
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key.pem
           chmod 600 ~/.ssh/deploy-key.pem
@@ -28,6 +28,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_IP: ${{ secrets.SSH_IP }}
 
-        - name: Print project root directory
-          run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} & pwd'
-
+      - name: Print project root directory
+        run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} & pwd'
