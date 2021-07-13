@@ -96,7 +96,7 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        print(username)
+        print(request)
         error = None
 
         if not username:
