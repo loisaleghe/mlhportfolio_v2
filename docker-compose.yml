@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/myportfolio
+      - .:/mlhportfolio_v2
     depends_on:
       - db
 
