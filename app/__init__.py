@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, send_from_directory, json, request
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -10,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
-load_dotenv()
+# load_dotenv()
 app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
