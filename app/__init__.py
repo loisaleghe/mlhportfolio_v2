@@ -96,7 +96,7 @@ def team_page():
     return render_template("team.html", title="Team Dragon's Den")
 
 
-@app.route("/register", methods=("GET", "POST"))
+@app.route("/registerxj", methods=("GET", "POST"))
 def register():
     if request.method == "POST":
         username = request.form.get("username")
