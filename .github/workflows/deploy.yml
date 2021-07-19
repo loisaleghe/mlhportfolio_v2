@@ -30,3 +30,9 @@ jobs:
 
       - name: Deploy site
         run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && git fetch && git reset --hard origin/master && docker-compose up -d --build'
+
+      - name: check deploy status
+        run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && docker-compose ps'
+
+      - name: Discord success notification
+        run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Successful. Check it out at https://dragondevsmlh.duckdns.org/"
